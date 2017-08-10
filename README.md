@@ -1,1 +1,3 @@
-# 口袋助理富文本编辑框
+# MOA wysiwyg-editor
+
+Base on quill open sourece project
