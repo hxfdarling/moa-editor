@@ -386,6 +386,7 @@ class Quill {
   }
   setValue(ubb, hashToUrlMap = {}) {
     this.setContents(this.clipboard.convert(ubbToHtml(ubb, hashToUrlMap)))
+    this.history.clear()
   }
   insertLink(text, link) {
     let range = this.getSelection(true);
