@@ -184,15 +184,7 @@ class AddLink extends Tooltip {
   save() {
     let text = this.textbox.value
     let link = this.linkbox.value
-
-    let range = this.quill.getSelection(true);
-    this.quill.updateContents(new Delta()
-      .retain(range.index)
-      .delete(range.length)
-      .insert(text, {
-        link
-      }), Emitter.sources.USER);
-
+    this.quill.insertLink(text, link)
     this.cancel()
   }
 }

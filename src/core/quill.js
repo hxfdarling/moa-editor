@@ -390,12 +390,15 @@ class Quill {
   }
   insertLink(text, link) {
     let range = this.getSelection(true);
-    this.updateContents(new Delta()
+    let delta = new Delta()
       .retain(range.index)
       .delete(range.length)
       .insert(text, {
         link
-      }), Emitter.sources.USER)
+      })
+    this.updateContents(delta, Emitter.sources.USER)
+    this.setSelection(delta.length() - (range ? range.length : 0), Quill.sources.SILENT);
+    this.scrollIntoView()
   }
   insertGps(data) {
     if (!data) {
@@ -403,20 +406,23 @@ class Quill {
     }
     let range = this.getSelection(true);
     let url = getGpsCanvas(data.text)
-    this.updateContents(new Delta()
+    let delta = new Delta()
       .retain(range.index)
       .delete(range.length)
       .insert({ gps: url }, {
         'data-text': data.text,
         'data-lon': data.lon,
         'data-lat': data.lat,
-      }), Emitter.sources.USER);
+      })
+    this.updateContents(delta, Emitter.sources.USER);
+    this.setSelection(delta.length() - (range ? range.length : 0), Quill.sources.SILENT);
+    this.scrollIntoView()
   }
   insertImage(data) {
     if (!data) { return }
     let range = this.getSelection(true);
     let size = imageSize(data)
-    this.updateContents(new Delta()
+    let delta = new Delta()
       .retain(range.index)
       .delete(range.length)
       .insert({ image: data.url }, {
@@ -425,7 +431,10 @@ class Quill {
         'data-hash': data.hash,
         'data-width': data.width,
         'data-height': data.height
-      }), Emitter.sources.USER);
+      })
+    this.updateContents(delta, Emitter.sources.USER);
+    this.setSelection(delta.length() - (range ? range.length : 0), Quill.sources.SILENT);
+    this.scrollIntoView()
   }
 }
 Quill.DEFAULTS = {
