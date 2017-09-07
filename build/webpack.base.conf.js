@@ -100,7 +100,6 @@ module.exports = {
   plugins: [
     new HappyPack({
       threads: cpus,
-      cache: false,
       loaders: [{
         loader: 'babel-loader',
         query: {
