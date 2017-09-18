@@ -520,6 +520,11 @@
 	display: table;
 }
 
+.ql-snow.ql-toolbar .ql-align,
+.ql-snow .ql-toolbar .ql-align {
+	display: none;
+}
+
 .ql-snow.ql-toolbar button,
 .ql-snow .ql-toolbar button {
 	background: none;
