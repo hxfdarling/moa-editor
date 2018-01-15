@@ -32,13 +32,13 @@ class SnowTheme extends BaseTheme {
 
 	extendToolbar(toolbar) {
 		toolbar.container.addEventListener('mousedown', e => {
-			e.preventDefault()
-		})
+			e.preventDefault();
+		});
 		toolbar.container.classList.add('ql-snow');
 		this.buildButtons([].slice.call(toolbar.container.querySelectorAll('button')), icons);
 		this.buildPickers([].slice.call(toolbar.container.querySelectorAll('select')), icons);
 		this.tooltip = new SnowTooltip(this.quill, this.options.bounds);
-		this.tooltipAddLink = new AddLink(this.quill, this.options.bounds)
+		this.tooltipAddLink = new AddLink(this.quill, this.options.bounds);
 		if (toolbar.container.querySelector('.ql-link')) {
 			this.quill.keyboard.addBinding({
 				key: 'K',
@@ -54,20 +54,20 @@ SnowTheme.DEFAULTS = extend(true, {}, BaseTheme.DEFAULTS, {
 		toolbar: {
 			handlers: {
 				gps(value) {
-					let gpsHandler = this.quill.options.gpsHandler
-					gpsHandler && gpsHandler(value)
+					let gpsHandler = this.quill.options.gpsHandler;
+					gpsHandler && gpsHandler(value);
 				},
 				image(value) {
-					let imageHandler = this.quill.options.imageHandler
-					imageHandler && imageHandler(value)
+					let imageHandler = this.quill.options.imageHandler;
+					imageHandler && imageHandler(value);
 				},
 				link: function(value) {
 					if (value) {
 						let range = this.quill.getSelection();
 						if (range == null || range.length == 0) {
-							let linkHandler = this.quill.options.linkHandler
+							let linkHandler = this.quill.options.linkHandler;
 							if (linkHandler) {
-								linkHandler()
+								linkHandler();
 							} else {
 								let tooltip = this.quill.theme.tooltipAddLink;
 								tooltip.edit();
@@ -152,7 +152,7 @@ class AddLink extends Tooltip {
 	constructor(quill, boundsContainer) {
 		super(quill, boundsContainer);
 		this.textbox = this.root.querySelector('.add-link-text');
-		this.linkbox = this.root.querySelector('.add-link-link')
+		this.linkbox = this.root.querySelector('.add-link-link');
 		this.listen();
 	}
 
@@ -165,23 +165,23 @@ class AddLink extends Tooltip {
 				this.cancel();
 				event.preventDefault();
 			}
-		}
+		};
 		this.textbox.addEventListener('keydown', handler);
-		this.linkbox.addEventListener('keydown', handler)
+		this.linkbox.addEventListener('keydown', handler);
 		this.quill.on(Emitter.events.SELECTION_CHANGE, (range, oldRange, source) => {
 			if (range == null) return;
 
-			this.cancel()
-		})
+			this.cancel();
+		});
 		this.root.querySelector('a.ql-action').addEventListener('click', (event) => {
 			this.save();
 			event.preventDefault();
-		})
+		});
 	}
 
 	cancel() {
 		this.textbox.value = '';
-		this.linkbox.value = 'http://'
+		this.linkbox.value = 'http://';
 		this.hide();
 	}
 
@@ -193,18 +193,18 @@ class AddLink extends Tooltip {
 	}
 
 	save() {
-		let text = this.textbox.value
-		let link = this.linkbox.value
+		let text = this.textbox.value;
+		let link = this.linkbox.value;
 		if (!/\w+:\/\//.test(link)) {
 			link = "http://" + link;
 		}
-		this.quill.insertLink(text, link)
-		this.cancel()
+		this.quill.insertLink(text, link);
+		this.cancel();
 	}
 }
 AddLink.TEMPLATE = `<label>文本: <input type="text" placeholder="输入文本" class="add-link-text"/></label><br/>
 <label>链接: <input type="text" class="add-link-link" placeholder="输入链接"/></label>
-<a class="ql-action"></a>`
+<a class="ql-action"></a>`;
 
 
 export default SnowTheme;
